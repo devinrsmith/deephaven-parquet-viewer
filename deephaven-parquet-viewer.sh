@@ -26,7 +26,7 @@ docker run \
     --name ${CONTAINER_NAME} \
     -p 10000:10000 \
     --mount type=bind,source=$(realpath "${PARQUET_FILE}"),target=/file.parquet,readonly \
-    ${REPO_PREFIX}deephaven-parquet-viewer > /dev/null
+    ${REPO_PREFIX}deephaven-parquet-viewer:latest > /dev/null
 
 trap cleanup EXIT
 
