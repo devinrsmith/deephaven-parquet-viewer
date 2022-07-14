@@ -1,0 +1,44 @@
+name: Build CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron:  '0 19 * * *'
+
+# For maximum cache coherency, ensure only one outstanding build at any given time
+concurrency: release
+
+jobs:
+  build:
+    # Forks don't need to run the scheduled cron
+    if: ${{ github.repository_owner == 'devinrsmith' || github.event_name != 'schedule' }}
+
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to ghcr.io
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bake (release)
+        uses: docker/bake-action@v2.1.0
+        with:
+          targets: release
+          pull: true
+          push: ${{ github.event_name != 'pull_request' }}
+        env:
+          REPO_PREFIX: ghcr.io/${{ github.repository_owner }}/
