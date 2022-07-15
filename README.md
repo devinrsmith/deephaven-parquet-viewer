@@ -23,5 +23,9 @@ docker run \
 
 ## Browser
 
-* Table iframe: [http://localhost:10000/iframe/table/?name=parquet_table](http://localhost:10000/iframe/table/?name=parquet_table)
-* IDE: [http://localhost:10000/ide/](http://localhost:10000/ide/)
+ * Table iframe: [http://localhost:10000/iframe/table/?name=parquet_table](http://localhost:10000/iframe/table/?name=parquet_table)
+ * IDE: [http://localhost:10000/ide/](http://localhost:10000/ide/)
+
+## Requirements
+
+Linux, Mac OS (Intel or M1), and Windows WSL should all be supported. Docker is currently a requirement for running the helper script and via a Docker container, but advanced users can get the application running natively if desired.
