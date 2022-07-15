@@ -20,3 +20,8 @@ docker run \
     -p 10000:10000 \
     ghcr.io/devinrsmith/deephaven-parquet-viewer:latest
 ```
+
+## Browser
+
+* Table iframe: [http://localhost:10000/iframe/table/?name=parquet_table](http://localhost:10000/iframe/table/?name=parquet_table)
+* IDE: [http://localhost:10000/ide/](http://localhost:10000/ide/)
