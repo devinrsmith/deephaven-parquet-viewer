@@ -14,13 +14,17 @@ variable "REPO_PREFIX" {
     default = ""
 }
 
+variable "IMAGE_NAME" {
+    default = "deephaven-parquet-viewer"
+}
+
 variable "CACHE_PREFIX" {
     default = "deephaven-parquet-viewer-"
 }
 
 target "deephaven-parquet-viewer" {
     tags = [
-        "${REPO_PREFIX}deephaven-parquet-viewer:latest"
+        "${REPO_PREFIX}${IMAGE_NAME}:latest"
     ]
 }
 
