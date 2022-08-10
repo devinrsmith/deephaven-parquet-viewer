@@ -7,7 +7,7 @@ A Parquet viewer powered by [deephaven-core](https://github.com/deephaven/deepha
 ## Helper script
 
 ```
-Usage: deephaven-parquet-viewer.sh [parquet-file]
+Usage: deephaven-parquet-viewer.sh [parquet-file] ([port])
 ```
 
 ## Docker container

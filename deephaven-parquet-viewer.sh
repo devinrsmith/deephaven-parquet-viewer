@@ -5,6 +5,7 @@ set -o pipefail
 set -o nounset
 
 PARQUET_FILE="${1:-}"
+PORT="${2:-10000}"
 CONTAINER_NAME="${CONTAINER_NAME:-deephaven-parquet-viewer}"
 REPO_PREFIX="${REPO_PREFIX:-ghcr.io/devinrsmith/}"
 
@@ -24,7 +25,7 @@ docker run \
     --rm \
     -d \
     --name ${CONTAINER_NAME} \
-    -p 10000:10000 \
+    -p "$PORT:10000" \
     --mount type=bind,source=$(realpath "${PARQUET_FILE}"),target=/file.parquet,readonly \
     ${REPO_PREFIX}deephaven-parquet-viewer:latest > /dev/null
 
@@ -39,8 +40,8 @@ do
 done
 echo
 echo "Ready!"
-echo "table @ http://localhost:10000/iframe/table/?name=parquet_table"
-echo "ide @ http://localhost:10000/ide/"
+echo "table @ http://localhost:$PORT/iframe/table/?name=parquet_table"
+echo "ide @ http://localhost:$PORT/ide/"
 echo
 echo "Control-C to exit"
 read -r -d '' _ </dev/tty
