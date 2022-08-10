@@ -13,6 +13,10 @@ function cleanup {
   docker stop ${CONTAINER_NAME} > /dev/null
 }
 
+function pwdpath {
+    [[ $1 = /* ]] && echo "$1" || echo "${PWD}/${1#./}"
+}
+
 if [ -z "${PARQUET_FILE}" ]; then
     echo "Usage: $0 [parquet-file]"
     exit 0
@@ -26,7 +30,7 @@ docker run \
     -d \
     --name ${CONTAINER_NAME} \
     -p "$PORT:10000" \
-    --mount type=bind,source=$(realpath "${PARQUET_FILE}"),target=/file.parquet,readonly \
+    --mount type=bind,source=$(pwdpath "${PARQUET_FILE}"),target=/file.parquet,readonly \
     ${REPO_PREFIX}deephaven-parquet-viewer:latest > /dev/null
 
 trap cleanup EXIT
