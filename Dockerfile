@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.4
 
 FROM eclipse-temurin:17
-COPY --link --from=ghcr.io/deephaven/server:0.16.1-scratch /opt/deephaven /opt/deephaven
+COPY --link --from=ghcr.io/deephaven/server-scratch:0.17.0 /opt/deephaven /opt/deephaven
 COPY --link config/ /opt/deephaven/config/
 VOLUME /data
 VOLUME /cache
