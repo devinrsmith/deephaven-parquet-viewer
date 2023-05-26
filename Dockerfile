@@ -2,4 +2,3 @@
 
 FROM ghcr.io/deephaven/server-slim:0.24.2
 COPY --link config/ /opt/deephaven/config/
-ENV START_OPTS="-Ddeephaven.application.dir=/opt/deephaven/config/app.d"
