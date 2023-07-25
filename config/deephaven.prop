@@ -1,3 +1,5 @@
 includefiles=dh-defaults.prop
 
 deephaven.console.type=groovy
+
+AuthHandlers=io.deephaven.auth.AnonymousAuthenticationHandler
