@@ -1,4 +1,4 @@
 # syntax=docker/dockerfile:1.4
 
-FROM ghcr.io/deephaven/server-slim:0.29.0
+FROM ghcr.io/deephaven/server-slim:0.29.1
 COPY --link config/ /opt/deephaven/config/
