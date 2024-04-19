@@ -3,8 +3,9 @@
 set -o errexit
 set -o pipefail
 set -o nounset
+# set -x
 
-PARQUET_FILE="${1:-}"
+PARQUET_SOURCE="${1:-}"
 PORT="${2:-10000}"
 CONTAINER_NAME="${CONTAINER_NAME:-deephaven-parquet-viewer}"
 REPO_PREFIX="${REPO_PREFIX:-ghcr.io/devinrsmith/}"
@@ -17,21 +18,37 @@ function pwdpath {
     [[ $1 = /* ]] && echo "$1" || echo "${PWD}/${1#./}"
 }
 
-if [ -z "${PARQUET_FILE}" ]; then
-    echo "Usage: $0 [parquet-file]"
+if [ -z "${PARQUET_SOURCE}" ]; then
+    echo "Usage: $0 [parquet-source]"
     exit 0
-elif [ ! -f "${PARQUET_FILE}" ]; then
-    echo "Argument is not a file"
-    exit 1
 fi
 
-docker run \
-    --rm \
-    -d \
-    --name ${CONTAINER_NAME} \
-    -p "$PORT:10000" \
-    --mount type=bind,source=$(pwdpath "${PARQUET_FILE}"),target=/file.parquet,readonly \
-    ${REPO_PREFIX}deephaven-parquet-viewer:latest > /dev/null
+if [[ "${PARQUET_SOURCE}" == s3:* ]]; then
+    docker run \
+        --name ${CONTAINER_NAME} \
+        --rm \
+        -d \
+        -p "$PORT:10000" \
+        -e PARQUET_SOURCE="${PARQUET_SOURCE}" \
+        -e AWS_REGION \
+        -e AWS_DEFAULT_REGION \
+        -e AWS_ACCESS_KEY_ID \
+        -e AWS_SECRET_ACCESS_KEY \
+        -e AWS_ENDPOINT_URL \
+        ${REPO_PREFIX}deephaven-parquet-viewer:latest > /dev/null
+elif [ ! -f "${PARQUET_SOURCE}" ]; then
+    echo "Argument is not a file nor S3 URI"
+    exit 1
+else
+    docker run \
+        --name ${CONTAINER_NAME} \
+        --rm \
+        -d \
+        -p "$PORT:10000" \
+        -e PARQUET_SOURCE=file:///file.parquet \
+        --mount type=bind,source=$(pwdpath "${PARQUET_SOURCE}"),target=/file.parquet,readonly \
+        ${REPO_PREFIX}deephaven-parquet-viewer:latest > /dev/null
+fi
 
 trap cleanup EXIT
 
