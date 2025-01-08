@@ -22,7 +22,12 @@ variable "CACHE_PREFIX" {
     default = "deephaven-parquet-viewer-"
 }
 
+// Allows CI to set this
+// https://github.com/docker/metadata-action?tab=readme-ov-file#bake-definition
+target "docker-metadata-action" {}
+
 target "deephaven-parquet-viewer" {
+    inherits = ["docker-metadata-action"]
     tags = [
         "${REPO_PREFIX}${IMAGE_NAME}:latest"
     ]
