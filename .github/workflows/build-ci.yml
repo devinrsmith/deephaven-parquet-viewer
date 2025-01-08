@@ -43,6 +43,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           files: |
             ./docker-bake.hcl
+            cwd://${{ steps.meta.outputs.bake-file-labels }}
             cwd://${{ steps.meta.outputs.bake-file-annotations }}
         env:
           REPO_PREFIX: ghcr.io/${{ github.repository_owner }}/
