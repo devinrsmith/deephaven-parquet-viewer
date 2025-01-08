@@ -16,11 +16,8 @@ jobs:
     # Forks don't need to run the scheduled cron
     if: ${{ github.repository_owner == 'devinrsmith' || github.event_name != 'schedule' }}
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -35,7 +32,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bake (release)
-        uses: docker/bake-action@v5.11.0
+        uses: docker/bake-action@v6
         with:
           targets: release
           pull: true
