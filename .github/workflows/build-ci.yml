@@ -33,7 +33,7 @@ jobs:
           DOCKER_METADATA_ANNOTATIONS_LEVELS: index
 
       - name: Login to ghcr.io
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
