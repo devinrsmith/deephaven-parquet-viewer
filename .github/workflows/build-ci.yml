@@ -26,7 +26,7 @@ jobs:
 
       - name: Set up Docker metadata
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         env:
           # "index" is shorthand for "annotation-index", https://github.com/moby/buildkit/blob/master/docs/annotations.md
           # GHCR wants it annotated an the annotation-index leevel, https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#adding-a-description-to-multi-arch-images
